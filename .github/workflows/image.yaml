@@ -32,5 +32,5 @@ jobs:
       - name: build the image
         run: |
           docker buildx build \
-          --tag multiarchbuilds/cockroach:latest --tag multiarchbuilds/cockroach:${{ github.ref }} \
+          --tag multiarchbuilds/cockroach:latest --tag multiarchbuilds/cockroach:$(echo ${{ github.ref }} | cut -d / -f 3) \
           --platform linux/amd64,linux/arm64 --push .
