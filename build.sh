@@ -15,7 +15,7 @@ else
 	export ac_cv_func_regcomp=yes
 	export ac_cv_printf_positional=yes
 
-	./build/builder/mkrelease.sh arm64-linux -j 12
+	./build/builder/mkrelease.sh arm64-linux -j $(nproc)
 
 	mv cockroach-linux-* /cockroach
 	cp build/deploy/cockroach.sh /

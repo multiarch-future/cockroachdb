@@ -10,6 +10,11 @@ jobs:
     steps:
       - name: checkout code
         uses: actions/checkout@v2
+      - name: Check if Git tag exists
+        run: echo "::set-env name=HEAD_TAG::$(git tag --points-at HEAD)"
+      - name: Runs only if Git tag exists
+        run: echo "This runs because Git tag points at HEAD ..."
+        if: env.HEAD_TAG != '' 
       - name: install buildx
         id: buildx
         uses: crazy-max/ghaction-docker-buildx@v1
@@ -20,5 +25,5 @@ jobs:
       - name: build the image
         run: |
           docker buildx build \
-          --tag multiarchbuilds/cockroach:latest \
+          --tag multiarchbuilds/cockroach:latest --tag multiarchbuilds/cockroach:$HEAD_TAG \
           --platform linux/amd64,linux/arm64 --push .
