@@ -27,13 +27,10 @@ jobs:
         uses: crazy-max/ghaction-docker-buildx@v1
         with:
           version: latest
-        if: env.HEAD_TAG != '' 
       - name: login to docker hub
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
-        if: env.HEAD_TAG != '' 
       - name: build the image
         run: |
           docker buildx build \
           --tag multiarchbuilds/cockroach:latest --tag multiarchbuilds/cockroach:${{ github.ref }} \
           --platform linux/amd64,linux/arm64 --push .
-        if: env.HEAD_TAG != '' 
