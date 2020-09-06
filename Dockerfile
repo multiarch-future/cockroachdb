@@ -4,6 +4,7 @@ ARG TARGETPLATFORM
 ARG COMMIT=f990441079c686f9eec32d80044c719175a2bee5
 
 COPY build.sh /build.sh
+RUN chmod +x /build.sh
 
 RUN /build.sh
 
