@@ -2,7 +2,8 @@ name: build image
 
 on:
   push:
-    branches: master
+    tags:
+      - 'v*'
 
 jobs:
   build:
@@ -10,10 +11,17 @@ jobs:
     steps:
       - name: checkout code
         uses: actions/checkout@v2
-      - name: Check if Git tag exists
-        run: echo "::set-env name=HEAD_TAG::$(git tag --points-at HEAD)"
-      - name: Check if Git tag exists
-        run: echo $HEAD_TAG
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: ""
+          draft: false
+          prerelease: false
       - name: install buildx
         id: buildx
         uses: crazy-max/ghaction-docker-buildx@v1
@@ -26,6 +34,6 @@ jobs:
       - name: build the image
         run: |
           docker buildx build \
-          --tag multiarchbuilds/cockroach:latest --tag multiarchbuilds/cockroach:$HEAD_TAG \
+          --tag multiarchbuilds/cockroach:latest --tag multiarchbuilds/cockroach:${{ github.ref }} \
           --platform linux/amd64,linux/arm64 --push .
         if: env.HEAD_TAG != '' 
