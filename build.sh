@@ -1,7 +1,7 @@
 if [ "$TARGETPLATFORM" = "linux/amd64" ]
 then
 	wget -qO- https://binaries.cockroachdb.com/cockroach-v20.1.6.linux-amd64.tgz | tar  xvz
-	cp -i cockroach-v20.1.5.linux-amd64/cockroach /
+	cp -i cockroach-v20.1.6.linux-amd64/cockroach /
 	wget -O /cockroach.sh https://raw.githubusercontent.com/cockroachdb/cockroach/$COMMIT/build/deploy/cockroach.sh
 	chmod +x /cockroach.sh
 else
