@@ -1,7 +1,7 @@
 FROM --platform=linux/amd64 cockroachdb/builder:20200326-092324 AS builder
 
 ARG TARGETPLATFORM
-ARG COMMIT=f990441079c686f9eec32d80044c719175a2bee5
+ARG COMMIT=be8c0a720e98a147263424cc13fc9bfc75f46013
 
 COPY build.sh /build.sh
 RUN chmod +x /build.sh
